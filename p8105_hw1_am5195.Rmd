@@ -1,7 +1,14 @@
 ---
 title: "Homework 1"
+author: Alexander Melamed
+date: 2020-09-17
 output: github_document
 ---
+
+
+```{r setup, include = FALSE}
+library(tidyverse)
+```
 
 # Problem 0.1
 
@@ -17,10 +24,7 @@ Nothing for me to do here
 
 In the codechunk below, I create a data frame by drawing 10 times from a standard Normal distribution, constructs a  logical vector indicating whether elements of the sample are greater than 0, a character vector of length 10, a factor vector of length 10, with 3 different factor “levels”
 
-
-```{r hw1}
-library(tidyverse)                 #call the tidyverse packages
-
+```{r hw1_p1_c1}
 ##set seed to ensure reproducibility
 set.seed(1)
 
@@ -32,6 +36,68 @@ hw1_df = tibble (
   fact_vec = factor(c("1","1","1","2","2","2","3","3","3","3"))
   )
 
-hw1_df
+
+##display the dataframe
+hw1_df  
+```
+The variable `norm_samp` has the class `r class(pull(hw1_df, norm_samp))`, the variable `norm_samp_pos` has the class `r class(pull(hw1_df, norm_samp_pos))`, the variable `char_vector` has the class `r class(pull(hw1_df, char_vector))`, and the variable `fact_vec` has the class `r class(pull(hw1_df, fact_vec))`.
+
+R has no problems taking the mean of numeric and logical variable:
+
+```{r hw1_p1_c2}
+## take the mean of variabls "norm_samp" and "norm_samp_pos" from the data frame "hw1_df"  
+
+mean(pull(hw1_df,norm_samp,))
+mean(pull(hw1_df,norm_samp_pos,))
 ```
 
+But if you try to do this with character or factor variable it gets mad:
+
+
+```{r hw1_p1_c3}
+## take the mean of variabls "char_vector" and "fact_vec" from the data frame "hw1_df"  
+
+mean(pull(hw1_df,char_vector,))
+mean(pull(hw1_df,fact_vec,))
+```
+
+You can use the `as.numeric` function to convert some types of variables to numeric variables. 
+
+``` {r hw1_p1_c4, eval = FALSE}
+## try to convert "norm_samp_pos", char_vector", and "fact_vec" to numeric variables
+
+norm_samp_pos =as.numeric(pull(hw1_df,norm_samp_pos))
+char_vector =as.numeric(pull(hw1_df,char_vector))
+fact_vec =as.numeric(pull(hw1_df,fact_vec))
+
+mean(fact_vec)
+```
+
+For a logical vector `as.numeric` will convert values of FALSE to 0s and values of TRUE to 1s. For a factor vector `as.numeric` will assign integer values to each level of the factor. However, for character vector `as.numeric`  will convert each value to an "NA." It appears that the mean function can implicitly undertake this conversion for a logical vector and produce a mean. This makes sense since the mean is easily interpertable the the proportion of observations that take the value TRUE. However for factor vectors mean produces an error, meaning function does not implicitly convert the factor levels to numeric variables. This also makes sense, because this mean is likely to be meaningless. Of course mean produces an error for the character vector. 
+
+The next code chunk demonstrates:
+
+*   how the logical vector `norm_samp_pos` can be converted to a numeric vector and multiplied by the numeric vector `norm_samp`
+
+*   how the logical vector `norm_samp_pos` can be converted to a to a factor, and multiplied by the numeric vector `norm_samp`
+
+*   how the logical vector `norm_samp_pos` can be converted to a to a factor, how the resulting factor can be converted to a numeric, and and multiplied by the numeric vector `norm_samp`
+
+
+``` {r hw1_p1_c5}
+## convert the logical vector to numeric, and multiply the random sample by the result
+
+norm_samp_pos =as.numeric(pull(hw1_df,norm_samp_pos))
+norm_samp_pos*(pull(hw1_df,norm_samp))
+
+##convert the logical vector to a factor, and multiply the random sample by the result
+norm_samp_pos =as.factor(pull(hw1_df,norm_samp_pos))
+norm_samp_pos*(pull(hw1_df,norm_samp))
+
+##convert the logical vector to a factor and then convert the result 
+##to numeric, and multiply the random sample by the result
+norm_samp_pos =as.factor(pull(hw1_df,norm_samp_pos))
+norm_samp_pos =as.numeric(norm_samp_pos)
+norm_samp_pos*(pull(hw1_df,norm_samp))
+
+```
