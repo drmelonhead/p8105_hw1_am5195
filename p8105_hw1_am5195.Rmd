@@ -6,3 +6,32 @@ output: github_document
 # Problem 0.1
 
 I have created an .Rmd file named **p8101_hw1_am5195.Rmd** which renders the Markdown as a _github_ document.
+
+# Problem 0.2
+
+
+Nothing for me to do here
+
+# Problem 1
+
+
+In the codechunk below, I create a data frame by drawing 10 times from a standard Normal distribution, constructs a  logical vector indicating whether elements of the sample are greater than 0, a character vector of length 10, a factor vector of length 10, with 3 different factor “levels”
+
+
+```{r hw1}
+library(tidyverse)                 #call the tidyverse packages
+
+##set seed to ensure reproducibility
+set.seed(1)
+
+##define data frame called "hw1_df" containing norm_samp norm_samp_pos char_vec and fact_vec
+hw1_df = tibble (                  
+  norm_samp = rnorm(10),           
+  norm_samp_pos = norm_samp > 0,  
+  char_vector = c("This", "is", "the", "form", "for", "words", "and", "other", "text","."),
+  fact_vec = factor(c("1","1","1","2","2","2","3","3","3","3"))
+  )
+
+hw1_df
+```
+
