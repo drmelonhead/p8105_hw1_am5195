@@ -1,0 +1,8 @@
+---
+title: "Homework 1"
+output: github_document
+---
+
+# Problem 0.1
+
+I have created an .Rmd file named **p8101_hw1_am5195.Rmd** which renders the Markdown as a _github_ document.
