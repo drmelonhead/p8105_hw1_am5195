@@ -101,3 +101,30 @@ norm_samp_pos =as.numeric(norm_samp_pos)
 norm_samp_pos*(pull(hw1_df,norm_samp))
 
 ```
+# Problem 2
+
+The following code chunk loads the `penguins` dataset:
+```{r hw1_p2_c1,}
+data("penguins", package = "palmerpenguins")
+```
+
+The dataset `penguins` includes the following variables: `r names(penguins)`. The data has `r nrow(penguins)` rows and  `r ncol(penguins)` columns. The mean flipper length is `r round(mean(penguins$flipper_length_mm,na.rm=TRUE))`mm.
+
+The following code chunk creates a scatter plot of `flipper_length_mm` on the y-axis vs `bill_length_mm` on the x-axis.  
+
+```{r hw1_p2_c2, warning=FALSE}
+##Generate plot
+ggplot(penguins, aes(            
+  x = bill_length_mm,            #assigns bill_length to x-axis
+  y = flipper_length_mm,         #assigns flipper_length to y-axis
+  color = species)) +            #assigns species different colors
+  geom_point()+                  #specifies scatter plot
+  labs(                          # formats labels
+    y= "Flipper length (mm)",    
+    x = "Bill length (mm)", 
+    color = "Species")
+
+##Save plot as a .pdf file in project directorty
+ggsave("HW1_p2_plot.pdf")
+
+```
